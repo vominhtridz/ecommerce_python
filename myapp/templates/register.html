@@ -1,29 +1,38 @@
-{% extends "base.html" %} {% block title %} home page {% endblock %}
+{% extends "base.html" %} {% block title %} Đăng kí tài khoản {% endblock %}
 {% block content %}
 
     <div class="container mt-[14rem] mx-auto w-[40rem]" id="container">
         <div class=" w-full  sign-in">
             <form class="loginForm w-full"  method="post">
-                <h1 class="font-bold text-lg">Đăng kí</h1>
-                <div class="social-icons">
-                    <label class="icon px-2"><i class="fa-brands cursor-pointer  fa-google-plus-g"></i></label>
-                    <label class="icon px-2"><i class="fa-brands cursor-pointer  fa-facebook-f"></i></label>
-                    <label class="icon px-2"><i class="fa-brands cursor-pointer  fa-github"></i></label>
-                    <label class="icon px-2"><i class="fa-brands cursor-pointer  fa-linkedin-in"></i></label>
-                </div>
-                <span>Hoặc nhập Email mật khẩu</span>
+                <h1 class="font-bold text-lg">Đăng kí tài khoản người dùng</h1>
+                
+                <span>Hoặc nhập Email và Mật khẩu</span>
                  <div class="w-full">
                    {% csrf_token %}
-                     {{ form.as_p }}
+                    <div class="w-full ">
+                        <label class="select-none py-1 whitespce-n  block" for="id_username">Tên người dùng:</label>
+                        <input type="text" name="username" class="px-2.5  border py-2 rounded-md bg-[#eee] border-gray-300 text-gray-800 text-sm outline-none w-full" placeholder="Tên người dùng..." autocomplete="new-password" required="" aria-describedby="id_password1_helptext" id="id_username" fdprocessedid="qexvon">
+                    
+                    </div>
+                    <div class="w-full ">
+                        <label class="select-none py-1  block" for="id_password1">Mật khẩu:</label>
+                        <input type="password" name="password1" class="px-2.5 border py-2 rounded-md bg-[#eee] border-gray-300 text-gray-800 text-sm outline-none w-full" placeholder="Mật khẩu..." autocomplete="new-password" required="" aria-describedby="id_password1_helptext" id="id_password1" fdprocessedid="qexvon">
+
+                    </div>
+                    <div class="w-full">
+                        <label class="select-none py-1  block" for="id_password2">Nhập lại mật khẩu:</label>
+                        <input type="password" name="password2" class="px-2.5 border py-2 rounded-md bg-[#eee] border-gray-300 text-gray-800 text-sm outline-none w-full" placeholder="Nhập lại mật khẩu..." autocomplete="new-password" required="" aria-describedby="id_password1_helptext" id="id_password2" fdprocessedid="qexvon">
+                    
+                    </div>
+                    <button class="bg-blue-800 float-left my-2 px-4 py-2 rounded-md text-sm text-white" type="submit">Đăng Kí</button>
                  </div>
-                <div class="flex justify-between w-full my-2">
-                    <button class="bg-blue-800 px-4 py-2 rounded-sm text-sm text-white" type="submit">Đăng Kí</button>
-                    <div class="flex items-center">
+                </form>
+                <div class="flex justify-end pr-10 w-full my-2 mt-6">
+                    <div class="flex justify- items-center">
                         <p class="px-2 pt-0.5 ">Đã có tài khoản? </p>
                         <a href="{% url 'login' %}" class="text-blue-500 underline"><p class="text-blue-500 underline">Đăng Nhập</p></a>
                     </div>
                 </div>
-            </form>
         </div>
        
     </div>

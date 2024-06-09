@@ -1,32 +1,36 @@
-{% extends "base.html" %} {% block title %} home page {% endblock %}
+{% extends "base.html" %} {% block title %} Đăng nhập {% endblock %}
 {% block content %}
 
     <div class="container mt-[14rem] mx-auto w-[40rem]" id="container">
         <div class=" w-full  ">
             <form class="loginForm  w-full" method="post">
                 <h1 class="text-lg font-bold">Đăng nhập</h1>
-                <div class="social-icons">
-                    <label class="icon px-2"><i class="fa-brands cursor-pointer fa-google-plus-g"></i></label>
-                    <label class="icon px-2"><i class="fa-brands cursor-pointer fa-facebook-f"></i></label>
-                    <label class="icon px-2"><i class="fa-brands cursor-pointer fa-github"></i></label>
-                    <label class="icon px-2"><i class="fa-brands cursor-pointer fa-linkedin-in"></i></label>
-                </div>
+                
                 
                 <span>Hoặc sử dụng email và mật khẩu</span>
                 <div class="w-full">
                     {% csrf_token %}
-                {{ form.as_p }}
-                </div>
-                <button class="text-blue-500 ml-auto">Quên mật khẩu?</button>
-                <div class="flex justify-between w-full my-2">
-                    <button type="submit" class="bg-blue-800 text-sm rounded-md px-4 py-2  text-white">Đăng Nhập</button>
-                    <div class="flex items-center">
-                        <p class="pt-1 px-2 mt-0 mb-0 ">chưa có tài khoản? </p>
-                        <a href="{% url 'register' %}"  class="my-0"><p class="p-0 text-blue-600 underline">Đăng Kí</p></a>
+           
+                    <div class="">
+                        <label for="id_username">Tên người dùng:</label>
+                        <input type="text" name="username" class="formInput" placeholder="Tên người dùng..." required="" id="id_username" fdprocessedid="lqjyzb">     
+                    </div>
+                    <div class="">
+                        <label for="id_password">Mật khẩu:</label>
+                        <input type="password" name="password" class="formInput" placeholder="Nhập mật khẩu..." required="" id="id_password" fdprocessedid="wuyld">    
+                        
                     </div>
                 </div>
-
+                <div class="flex justify-between w-full my-2">
+                    <button type="submit" class="bg-blue-800 text-sm rounded-md px-4 py-2  text-white">Đăng Nhập</button>
+                </div>
+                
             </form>
+            <div class="flex items-center px-10 text-base">
+                <button class="text-blue-500 ml-auto">Quên mật khẩu?</button>
+                <p class=" px-2 mt-0 mb-0 ">chưa có tài khoản? </p>
+                <a href="{% url 'register' %}"  class="my-0"><p class=" text-blue-600 hover:underline">Đăng Kí</p></a>
+            </div>
         </div>
        
     </div>

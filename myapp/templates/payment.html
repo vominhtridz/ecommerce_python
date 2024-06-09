@@ -1,71 +1,78 @@
-{% extends "base.html" %} {% block title %} home page {% endblock %}
+ 
+ {% extends "base.html" %}
+
+
+
 {% block content %}
 
-  <div class="payment mx-auto mt-[12rem]">
-        <h1 class="text-lg font-semibold">Xác Nhận thanh toán</h1>
-        <div class="first-row">
-            <div class="owner">
-                <h3>Chủ sở hữu</h3>
-                <div class="input-field">
-                    <input type="text">
+    <div class="mt-[9rem] px-6 bg-white">
+        <h3 class="text-xl font-semibold uppercase py-4">Thanh toán đơn hàng</h3>
+        <div class="table-responsive">
+            <form action="{% url "payment" %}" id="create_form" method="post">
+                <div class="form-group w-full flex whitespace-nowrap py-2">
+                    <label for="language w-[6rem]" class="block w-[9rem]">Loại hàng hóa </label>
+                    <select name="order_type" id="order_type" class="form-control border border-gray-500 p-1 mx-4">
+                        <option value="topup">Nạp tiền điện thoại</option>
+                        <option value="billpayment">Thanh toán hóa đơn</option>
+                        <option value="fashion">Thời trang</option>
+                        <option value="other">Khác - Xem thêm tại VNPAY</option>
+                    </select>
                 </div>
-            </div>
-            <div class="cvv">
-                <h3>CVV</h3>
-                <div class="input-field">
-                    <input type="password">
+                <div class="form-group py-2 w-full flex whitespace-nowrap py-2">
+                    <label for="order_id" class="block w-[9rem]">Mã hóa đơn</label>
+                    <input class="form-control outline-blue-400 border border-gray-500 text-sm p-1 mx-4 " id="order_id"
+                        name="order_id" type="text" value="{% now "YmdHis" %}"/>
                 </div>
-            </div>
-        </div>
-        <div class="second-row">
-            <div class="card-number">
-                <h3>Số Card</h3>
-                <div class="input-field">
-                    <input type="text">
+                <div class="form-group w-full flex whitespace-nowrap py-2">
+                    <label for="amount" class="block w-[9rem]">Số tiền</label>
+                    <input class="form-control outline-blue-400 border border-gray-500 text-sm p-1 mx-4 " id="amount"
+                        name="amount" type="number" value="10000"/>
                 </div>
-            </div>
-        </div>
-        <div class="third-row">
-            <h3>Tháng năm</h3>
-            <div class="selection">
-                <div class="date">
-                    <select name="months" id="months">
-                        <option value="Jan">Jan</option>
-                        <option value="Feb">Feb</option>
-                        <option value="Mar">Mar</option>
-                        <option value="Apr">Apr</option>
-                        <option value="May">May</option>
-                        <option value="Jun">Jun</option>
-                        <option value="Jul">Jul</option>
-                        <option value="Aug">Aug</option>
-                        <option value="Sep">Sep</option>
-                        <option value="Oct">Oct</option>
-                        <option value="Nov">Nov</option>
-                        <option value="Dec">Dec</option>
-                      </select>
-                      <select name="years" id="years">
-                        <option value="2020">2020</option>
-                        <option value="2019">2019</option>
-                        <option value="2018">2018</option>
-                        <option value="2017">2017</option>
-                        <option value="2016">2016</option>
-                        <option value="2015">2015</option>
-                      </select>
+                <div class="form-group w-full flex whitespace-nowrap py-2">
+                    <label for="order_desc" class="block w-[9rem]">Nội dung thanh toán</label>
+                    <textarea class="form-control outline-blue-400 border border-gray-500 text-sm p-1 mx-4 " cols="20" id="order_desc" name="order_desc" rows="2">Thanh toan don hang thoi gian: {% now "Y-m-d H:i:s" %}</textarea>
                 </div>
-                <div class="cards">
-                    <img src="mc.png" alt="">
-                    <img src="vi.png" alt="">
-                    <img src="pp.png" alt="">
+                <div class="form-group w-full flex whitespace-nowrap py-2">
+                    <label for="bank_code" class="block w-[9rem]">Ngân hàng</label>
+                    <select name="bank_code" id="bank_code" class="form-control border border-gray-500 mx-4">
+                        <option value="">Không chọn</option>
+                        <option value="NCB"> Ngan hang NCB</option>
+                        <option value="AGRIBANK"> Ngan hang Agribank</option>
+                        <option value="SCB"> Ngan hang SCB</option>
+                        <option value="SACOMBANK">Ngan hang SacomBank</option>
+                        <option value="EXIMBANK"> Ngan hang EximBank</option>
+                        <option value="MSBANK"> Ngan hang MSBANK</option>
+                        <option value="NAMABANK"> Ngan hang NamABank</option>
+                        <option value="VNMART"> Vi dien tu VnMart</option>
+                        <option value="VIETINBANK">Ngan hang Vietinbank</option>
+                        <option value="VIETCOMBANK"> Ngan hang VCB</option>
+                        <option value="HDBANK">Ngan hang HDBank</option>
+                        <option value="DONGABANK"> Ngan hang Dong A</option>
+                        <option value="TPBANK"> Ngân hàng TPBank</option>
+                        <option value="OJB"> Ngân hàng OceanBank</option>
+                        <option value="BIDV"> Ngân hàng BIDV</option>
+                        <option value="TECHCOMBANK"> Ngân hàng Techcombank</option>
+                        <option value="VPBANK"> Ngan hang VPBank</option>
+                        <option value="MBBANK"> Ngan hang MBBank</option>
+                        <option value="ACB"> Ngan hang ACB</option>
+                        <option value="OCB"> Ngan hang OCB</option>
+                        <option value="IVB"> Ngan hang IVB</option>
+                        <option value="VISA"> Thanh toan qua VISA/MASTER</option>
+                    </select>
                 </div>
-            </div>    
-        </div>
-        <a class="confirm" href="/">Thanh toán</a>
-    </div>
+                <div class="form-group w-full flex whitespace-nowrap py-2">
+                    <label for="language" class="block w-[9rem]">Ngôn ngữ</label>
+                    <select name="language" id="language" class="form-control border border-gray-500 mx-4">
+                        <option value="vn">Tiếng Việt</option>
+                        <option value="en">English</option>
+                    </select>
+                </div>
 
-    <script src="">
-        const payment = document.querySelector('.confirm')
-        payment.addEventListener('click', () => {
-            alert('Thanh toán thành công')
-        })
-    </script>
-{%endblock%}
+                <button type="submit" class="btn btn-default bg-red-600 text-white border-gray-50 shadow rounded-sm hover:bg-red-500 px-4 py-1.5 my-4">Thanh toán </button>
+                {% csrf_token %}
+                <div class="form-group"></div>
+            </form>
+        </div>
+    </div>
+   
+{% endblock %}

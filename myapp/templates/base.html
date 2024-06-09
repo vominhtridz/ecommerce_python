@@ -4,73 +4,135 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %} Sunlight{% endblock %}</title>
-    {% load static %}
+    {% load static %} 
     <link rel="stylesheet" href="{% static 'css/index.css' %}">
     <!-- tailwind -->
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-      <link rel="" href="">
-    <script src="https://cdn.tailwindcss.com"></script>
+      <link rel="icon" href="{% static 'images/logo-1.jpg' %}">
+      
+      {% block css %}{% endblock %}
+        <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      #account:hover #account_item {
+        display: block;
+      }
+     #notify:hover #notify_child {
+      display: block;
+     }
+     #search_item{
+      display: none;
+     }
+     #search:focus   #search_item {
+      display: block;
+     }
+    </style>
 </head>
 <body>
     <!--logo  -->
     <div class='fixed top-0 right-0 z-10 left-0 px-10 shadow bg-white border-b border-slate-300'>
-       <div class="w-full flex items-center   px-6">
+       <div class="w-full flex items-center  ">
         <a href="/" class='w-[90px] block'>
-            <img src="{% static 'images/LogoShop.png' %}" alt="" class="w-full h-full">
+            <img src="{% static 'images/Logo-1.jpg' %}" alt="" class="">
         </a>
-        <!-- search -->
-        <div class="w-[45rem] mx-auto relative z-40">
-          <input type="text" class="rounded-sm px-3    text-sm py-2  border border-slate-300 w-full outline-none" placeholder="Tìm kiếm sản .">
-          <div class="absolute bg-white flex flex-col shadow-md top-full left-0 right-0 p-2 w-full">
-            <p class=" w-full py-1 px-2">tìm kiếm...</p>
-            <a href="/adidas" class=" w-full py-1 hover:bg-slate-50 px-2">Sản phẩm adidas</a>
-            <a href="/asics" class=" w-full py-1 hover:bg-slate-50 px-2">Sản phẩm asics </a>
-        
+         <div class="hidden searchItems">
+        {% for post in products %}
+        <div class="items-search" >
+            {{post.title}}
           </div>
+        {% endfor%}
+      </div>
+       <!-- search -->
+       <div class="w-[45rem] search_container mx-auto relative z-40">
+        <div class="w-full flex ">
+          <input type="text" id="search-input" class=" px-3 search text-sm py-2 border border-slate-300 w-full outline-none" placeholder="Tìm kiếm....">
+        <button class="px-4 py-2 bg-green-500 whitespace-nowrap   rounded-sm text-white">Tìm kiếm</button>
         </div>
-
+        <div id="search-dropdown" class="absolute hidden search_item bg-white overflow-hidden flex flex-col shadow-md top-full left-0 right-0 p-2 w-full">
+          <p id="search_default" class="w-full py-1 px-2">tìm kiếm...</p>
+          
+        </div>
+      </div>
+{% if messages %}
+      <div class="fixed top-20 px-4 py-2 rounded-sm bg-white text-sm  left-1/3 shadow-lg z-50" id="message">
+          <div class="message flex items-center {{ message.tags }}">
+            <p class=" bg-blue-500 rounded-full text-white px-2 py-1  mr-2 "><i class="fa-solid fa-check"></i></p>
+            {% for message in messages%}
+            {{ message }} 
+            {%endfor%}
+          </div>  
+      </div>
+      {%endif%}
         <!-- options -->
-        <nav class="flex items-center justify-center ml-auto">
-          <a  href="/support" class="text-sm rounded-sm px-4 py-2  border-white border-b-2 hover:border-red-300 ">Hổ trợ</a>
-          {% if request.path == '/payment/' %}
-          <a  href="/payment"class="text-sm rounded-sm px-4  ">
-            <p class="border-b-2 border-red-300 hover:border-red-300 py-2">thanh toán</p>
-          </a>
-          {% else %}
-          <a  href="/payment"class="text-sm rounded-sm px-4   border-white ">
-            <p class="border-b-2 border-white  hover:border-red-300 py-2">thanh toán</p>
-          </a>
-          {% endif%}
+        {%if current_user%}
+<nav class="flex items-center justify-center ml-auto">
+        {% if  user and  current_user %}
+         <div class="flex items-center ">
+          <div  class="text-sm py-4 whitespace-nowrap rounded-sm px-4  relative" id="notify">
+            Thông báo 
+            <div id="notify_child" class="hidden absolute notify-item w-[30rem] right-0 border py-1.5 border-gray-200 z-50 max-h-[35rem]  rounded-sm min-h-56 bg-white shadow-lg text-sm ">
+             
+              {% if Notifications %}
+                {% for notifi in Notifications %}
+                  <a  href="/{{notifi.to}}" class="text-gray-800 max-h-[56px] flex mb-3 p-2 hover:bg-gray-200">
+                    <img src="/media/{{notifi.image}}" class="rounded-full w-10 h-10 shadow border border-gray-200" alt="">    
+                    <div class="ml-4 w-full text-ellipsis">
+                      <p class=" font-semibold text-gray-600">{{notifi.username}}</p>
+                      <p class="overflow-hidden text-ellipsis max-w-[255px]">
+                      {{notifi.message}}
+                      </p>
+                      
+                    </div>
+                    <time class="italic ml-auto">{{notifi.created_at}}</time>
+                  </a>
+                {% endfor%}
+              {% else %}
+              <p class="px-2 py-1 whitespace-nowrap flex items-center justify-center font-semibold text-base text-gray-600">Chưa có thông báo</p>
+              {% endif%}
+            </div>
+          </div>
+
+         </div>
+        {% endif %}
+          
+          
           {% if request.path == '/cart/' %}
-          <a  href="/cart"class="text-sm rounded-sm px-4   border-white  ">
+          <a  href="/cart/{{current_user.id}}"class="text-sm whitespace-nowrap rounded-sm px-4   border-white  ">
             <p class="border-b-2 hover:border-red-300 border-red-300 py-2">Giỏ hàng</p>
           </a>
           {% else %}
-          <a  href="/cart"class="text-sm rounded-sm px-4     ">
+          <a  href="/cart/{{current_user.id}}"class="text-sm whitespace-nowrap rounded-sm px-4     ">
             <p class="border-b-2 hover:border-red-300 border-white  py-2">Giỏ hàng</p>
           </a>
           {% endif%}
-
+        {%endif%}
           <!-- loggin -->
+        {% if current_user %}
+            <div class="px-2 text-sm relative logged_in relative block" id="account"> 
+              <a href="/profile/{{current_user.id}}/infor" class="whitespace-nowrap px-2 text-sm relative logged_in flex items-center">
+              <img src="{{ Profile.image.url|default:'/static/images/user-icon.png' }}" class=" shadow -lgmr-2 w-6 h-6 rounded-full" alt="">
+              {{ Profile.defaultName|default:user.username }}
+              </a>
 
-        {% if user %}
-            <p class="px-2 text-sm relative logged_in"> {{ user.username }}</p>
-            {% if user.username %}
-            <a href="{% url 'logout' %}" class="absolute top-12 right-12 logged_in_item bg-white px-6 py-1.5 shadow whitespace-nowrap">Logout</a>
-          {% endif %}
-          
-        {% else %}
-          {% if request.path == '/login/' %}
-            <a href="{% url 'login' %}" class="text-sm py-4 rounded-sm px-4">
-              <p class="border-b-2 border-red-300 hover:border-red-300 py-2"> Đăng nhập</p>
-            </a>
-          
-            {% else %}
-            <a href="{% url 'login' %}" class="text-sm rounded-sm px-4">
-              
+              <div id="account_item" class="absolute hidden top-5 z-50 right-0 min-w-[10rem] shadow-lg border border-gray-300 bg-white rounded-md text-sm py-2">
+                  <a href="/profile/{{current_user.id}}/infor" class=" px-4 py-1 block hover:bg-gray-100 whitespace-nowrap w-full">Thông tin tài khoản</a>
+                  <a href="/cart/{{current_user.id}}" class=" px-4 py-1 block hover:bg-gray-100 whitespace-nowrap w-full">Giỏ hàng </a>
+                  <a href="/profile/{{current_user.id}}/notification" class=" px-4 py-1 block hover:bg-gray-100 whitespace-nowrap w-full">Thông báo</a>
+                  <a href="/logout" class=" px-4 py-1 block hover:bg-gray-100 whitespace-nowrap w-full">Logout</a>
+              </div>
+            </div>
+            
+        {% endif %}
+        {% if not current_user %}
+          <div class="flex items-center">
+            <a href="/accounts/login/" class="text-sm py-4 rounded-sm px-4 whitespace-nowrap">
               <p class="border-b-2 border-white hover:border-red-300 py-2"> Đăng nhập</p>
             </a>
-          {% endif%}
+            <a href="accounts/register/" class="text-sm rounded-sm px-4 whitespace-nowrap">
+              
+              <p class="border-b-2 border-white hover:border-red-300 py-2"> Đăng kí</p>
+            </a>
+          </div>
+          
         {% endif %}
           
          
@@ -92,29 +154,42 @@
           <div class="relative cateProd cursor-pointer  border-b-2 hover:border-red-300 border-white">
             Danh mục sản phẩm
               <div class="absolute top-full childCateProd right-0 bg-white  py-2 rounded-sm shadow-lg ">
-                <a href="/nike" class="px-2 py-1 inline-block hover:bg-red-50 text-sm w-full">Nike</a>
-                <a href="/adidas" class="px-2 py-1 inline-block hover:bg-red-50 text-sm w-full ">Adidas</a>
-                <a href="/puma" class="px-2 py-1 inline-block hover:bg-red-50 text-sm w-full ">Puma</a>
-                <a href="/asics" class="px-2 py-1 inline-block hover:bg-red-50 text-sm w-full ">Asics</a>
-                <a href="/pelock" class="px-2 py-1 inline-block hover:bg-red-50 text-sm w-full ">Pelock</a>
-              </div>
+                <a href="/nike" class="px-2 py-1 inline-block hover:bg-red-50 text-sm w-full">Laptop HP</a>
+                <a href="/adidas" class="px-2 py-1 inline-block hover:bg-red-50 text-sm w-full ">Laptop dell</a>
+                <a href="/puma" class="px-2 py-1 inline-block hover:bg-red-50 text-sm w-full ">Laptop MSI</a>
+                <a href="/asics" class="px-2 py-1 inline-block hover:bg-red-50 text-sm w-full ">Laptop bravo</a>
+                <a href="/pelock" class="px-2 py-1 inline-block hover:bg-red-50 text-sm w-full ">Laptop đẹp </a>
+              </div>  
           </div>
-          <a href="/nike" class="px-4 border-b-2 hover:border-red-300 border-white py-1">Giày nữ</a>
-          <a href="/pelock" class="px-4 border-b-2 hover:border-red-300 border-white py-1">Giày Nam</a>
+          <a href="/nike" class="px-4 border-b-2 hover:border-red-300 border-white py-1">mới nhất</a>
+          <a href="/pelock" class="px-4 border-b-2 hover:border-red-300 border-white py-1">cũ nhất</a>
           </div>
           <!-- shopping cart -->
-          <a href="/cart" class="w-8 h-8 text-slate-300 mr-40 shopping  relative">
+          {% if current_user %}
+          <div  class="w-8 h-8 text-slate-300 mr-40 shopping  relative">
             <img src="{% static '/images/cart_img.png' %} " class="text-slate-300" alt="">
             <div class="absolute bottom-4 right-[-10px] bg-white text-red-500 rounded-full flex items-center justify-center px-2  border border-slate-300">
-              0
+              {{ Shoppings|length }}
             </div>
-            <div class="absolute top-full shopping_item transition duration-500   right-0 bg-white rounded-sm shadow p-2 ">
-              <div class="flex flex-col items-center p-6">
+            <div class="absolute top-[80%] shopping_item transition border border-gray-50 duration-500 w-[25rem]   right-[-10px] bg-white rounded-sm shadow p-2 ">
+              <div class= "items-center p-2">
+                
+                {% if Shoppings %}
+                {% for product in Shoppings %}
+                  <a href="/cart/{{current_user.id}}/" class="flex items-center py-2 text-black text-[12px] hover:bg-gray-100">
+                    <img src="{{ product.image.url }}" class="w-10 h-10" alt="">
+                    <p class="px-4">{{product.title}}</p>
+                    <p class="text-red-600 pr-4">{{ product.price}}</p>
+                  </a>
+                {% endfor %}
+                {% else %}
                 <img src="{% static 'images/no_product_img.png' %}" class="w-10 h-10" alt="">
                 <p class="whitespace-nowrap py-2 text-black ">Chưa có sản phẩm</p>
+                {%endif%}
               </div>
             </div>
-          </a>
+          </div>
+          {%endif%}
        </div>
     </div>
             {% comment %} body {% endcomment %}
@@ -131,5 +206,88 @@
       </div>
     <div>
 </body>
-<script src="{% static 'js/slider.js' %}"></script>
+<script >
+  var searchContainer = document.querySelector('.search_container');
+  var searchBar = document.querySelector('.search_item');
+  var searchInput = document.getElementById('search-input');
+ // ---------------------notify-------
+ document.addEventListener('click', function(event) {
+  const isClickInside = searchContainer.contains(event.target);
+  searchBar.classList.toggle('hidden', !isClickInside);
+});
+
+searchInput.addEventListener('input', debounce(function(e) {
+   searchBar.innerHTML = '';
+searchBar.innerHTML = `<p id="search_default" class="w-full py-1 px-2">tìm kiếm...</p>`
+  if (searchInput.value == ''){
+    searchBar.innerHTML = '';
+searchBar.innerHTML = `<p id="search_default" class="w-full py-1 px-2">tìm kiếm...</p>`
+return
+  }
+  const value = e.target.value.trim().toLowerCase();
+  const result = handleSearch(value);
+  const search_default = document.getElementById('search_default')
+  result.map(item => {
+    let aElement = document.createElement('a');
+    aElement.textContent = item; // Set the text content
+    aElement.href = `/search/${item}/`; // Set the href attribute
+    aElement.classList.add('px-2', 'text-sm','py-2','hover:bg-gray-200');
+    searchBar.append(aElement);
+});
+  
+}, 300));
+
+function handleSearch(value) {
+  const items = document.querySelector('.searchItems');
+  const searchValue = value.toLowerCase();
+  const getTitleSearch = Array.from(items.querySelectorAll('.items-search')).map(item => item.textContent.trim());
+
+  return getTitleSearch.filter(title => title.includes(searchValue)) || '';
+}
+
+// Debounce function
+function debounce(func, wait) {
+  let timeout;
+  return function executedFunctions(...args) {
+
+    const later = () => {
+      timeout = null;
+      func(...args);
+    };
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+  };
+}
+document.addEventListener("DOMContentLoaded", function() {
+        var message = document.getElementById("message");
+        message.style.display = "block"; // Show the message initially
+
+        setTimeout(function() {
+            message.style.display = "none"; // Hide the message after 5 seconds
+        }, 5000);
+    });
+ 
+</script>
+<script type="text/javascript">
+    $("#btnPopup").click(function () {
+        var postData = $("#frmCreateOrder").serialize();
+        var submitUrl = $("#frmCreateOrder").attr("action");
+        $.ajax({
+            type: "POST",
+            url: submitUrl,
+            data: postData,
+            dataType: 'JSON',
+            success: function (x) {
+                if (x.code === '00') {
+                    vnpay.open({width: 480, height: 600, url: x.data});
+                    return false;
+                } else {
+                    alert(x.Message);
+                }
+            }
+        });
+        return false;
+    });
+</script>
+
 </html>

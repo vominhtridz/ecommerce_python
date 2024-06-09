@@ -1,0 +1,32 @@
+{% extends "base.html" %} {% block title %}Thay đổi mật khẩu {% endblock %}
+{% block content %}
+<div class="mt-36 ">
+    <div class="flex w-full h-full">
+        <div class="w-1/4 bg-white shadow mx-4 rounded-sm p-4 ">
+            <h2 class="py-2 text-2xl tracking-wide text-gray-600 flex justify-center font-bold">Hồ sơ</h2>
+            <a href="/profile/{{current_user.id}}/infor" class="w-full block py-2 text-left hover:text-red-500">Thông tin cá nhân</a>
+            <a href="/profile/{{current_user.id}}/changepassword" class="w-full block py-2 text-left hover:text-red-500">Đổi mật khẩu</a>
+            <a href="/profile/{{current_user.id}}/notification" class="w-full block py-2 text-left hover:text-red-500">Cài đặt thông báo</a>
+            <a href="/profile/{{current_user.id}}/options" class="w-full block py-2 text-left hover:text-red-500">tùy chỉnh tài khoản</a>
+        </div>
+        <form action="/changepassword/{{Profile.id}}" method="Post" enctype="multipart/form-data" class="form_profile h-full w-full shadow bg-white rounded-sm mx-4 py-4 pl-16 pr-4">
+            <h2 class="py-2 text-2xl text-gray-600 tracking-wide flex justify-center font-bold">Thay đổi mật khẩu 
+            {% csrf_token %}
+
+            </h2>
+            <div class="w-1/2 flex whitespace-nowrap my-4">
+                <label for="old_password" class="block pr-6 w-[110px] text-gray-600  text-gray-600 my-1">Mật khẩu cũ</label>
+                <input type="text" name="old_password"  class="outline-blue-300 px-2 py-1.5 border border-gray-400 text-sm rounded-sm w-full" placeholder="Nhập mật khẩu cũ..." required="" id="old_password" fdprocessedid="aw6ysah">
+            </div>
+             <div class="w-1/2 flex whitespace-nowrap my-4">
+                <label for="new_password" class="block pr-4 w-[110px] text-gray-600  text-gray-600 my-1">Mật khẩu mới</label>
+                <input type="text" name="old_password"  class="outline-blue-300 px-2 py-1.5 border border-gray-400 text-sm rounded-sm w-full" placeholder="Nhập mật khẩu Mới..." required="" id="new_password" fdprocessedid="aw6ysah">
+            </div>
+            <button type="submit" class="bg-red-500 rounded-sm px-6 py-2 flex justify-end ml-auto text-white">Lưu </button>
+        </form>
+    </div>
+    
+    
+</div>
+
+{%endblock%}

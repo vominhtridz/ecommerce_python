@@ -1,60 +1,296 @@
-{% extends "base.html" %} {% block title %} home page {% endblock %}
+{% extends "base.html" %} {% block title %} Thông tin sản phẩm {% endblock %}
 {% block content %}
     {% load static %}
-<!-- body -->
-<div class="w-full mt-[30rem]">
-    <nav class="py-4 px-6 flex items-center">
-        <a href="/" class="px-4 py-2">Trang chủ</a>
-        <p class="px-1">/</p>
-        <a href="/" class="px-3 py-2">Tất cả sản phẩm</a>
-        <p class="px-1">/</p>
 
-        <button class="px-3 py-2">Giày cbolary</button>
-    </nav>
-    <div class="bg-slate-50 flex  rounded-sm p-4 ml-10 my-6">
-        <div class="h-full w-1/2">  
-            <img src="{% static 'images/adidas/adidas_horizontal1.jpg' %}" class="rounded-sm" alt="">
+<!-- body -->
+<div class="w-full mt-[8rem]">
+    
+    <form action="/addcart/{{product.id}}/" method="POST" enctype="multipart/form-data"  class="bg-white flex   rounded-sm p-4 mx-8 my-6">
+        {% csrf_token %}
+        <div class=" w-1/2  p-12">  
+            <img src="{{product.image.url}}" class="w-full h-full   rounded-sm flex items-center justify-center  bg-white" alt="">
         </div>
-        <div class="w-1/2 h-full">
-                <h2 class="text-xl font-semibold pb-2">Giày Thể Thao Thông Dụng Nam Biti's BSM000700</h2>
-                <p class="text-xl text-red-500 py-2 px-4">427,000  <sup>₫</sup></p>
+        <div class="w-1/2 pt-6 h-full ">
+            <nav class=" flex items-center">
+                <a href="/" class="px-2 py-2 font-normal text-base text-slate-500">Trang chủ</a>
+                <p class="px-1">/</p>
+                <a href="/" class="px-2 py-2 font-normal text-base text-slate-500">Tất cả sản phẩm</a>
+                <p class="px-1">/</p>
+                <button class="px-2 py-2 font-normal text-base">laptop</button>
+            </nav>
+                <h2 class="text-xl font-semibold pb-2">{{product.title}}</h2>
+                <p class="text-xl text-red-500 py-2 px-4 font-semibold">{{product_price}}  <sup>₫</sup></p>
             <div class="text-base">
                 <nav class="flex items-center py-2">
                     <p class="pr-1">Tình trạng:</p>
                     <p class="text-blue-500">còn hàng</p>
                 </nav>
-                <div class="flex ">
-                    <div class="px-1 rounded-sm cursor-pointer text-center font-semibold text-sm">
-                        <img src="{% static 'images/adidas/adidas_horizontal.jpg' %}" class="w-10 h-12" alt="">
-                        <p class="">Đen</p>
-                    </div>
-                    <div class="px-1 rounded-sm cursor-pointer text-center font-semibold text-sm">
-                        <img src="{% static 'images/adidas/adidas_horizontal1.jpg' %}" class="w-10 h-12" alt="">
-                        <p class="">Trắng</p>
-                    </div>
-                    <div class="px-1 rounded-sm cursor-pointer text-center font-semibold text-sm">
-                        <img src="{% static 'images/adidas/adidas_horizontal2.jpg' %}" class="w-10 h-12" alt="">
-                        <p class="">Xanh</p>
-                    </div>
-                </div>
+               <nav class="pb-10 ">
+                <h2 class="font-semibold">
+                    Điểm nổi bật
+                </h2>
+                - 
+
+Một chiếc máy tính tiên tiến với hiệu suất mạnh mẽ, thiết kế sang trọng và tính linh hoạt vượt trội. Với vi xử lý mới nhất và card đồ họa cao cấp, nó đem đến trải nghiệm đỉnh cao cho người dùng. Màn hình cực kỳ sắc nét và màu sắc chân thực cùng hệ thống âm thanh vòm chất lượng cao, làm cho việc giải trí và làm việc trở nên sống động hơn bao giờ hết. Khả năng kết nối linh hoạt với các cổng đa dạng và tính năng bảo mật tiên tiến đảm bảo sự an toàn và tiện lợi cho người dùng. Đặc biệt, thiết kế nhỏ gọn và pin bền bỉ giúp chiếc máy tính này dễ dàng mang theo mọi nơi, từ văn phòng đến du lịch.
+               </nav>
             </div>
-            <nav class="flex items-center w-[8rem] my-4">
-                <button class="px-4  text-base border-r-0 py-1 font-bold flex items-center justify-center rounded-sm border border-slate-300">-</button>
-                <input min="1" max="9999" type='number ' value="1" class="w-full py-1 pl-4 border border-slate-300 outline-none" >
-                <button class="px-4 text-base border-l-0 py-1 font-bold flex items-center justify-center rounded-sm border border-slate-300">+</button>
-            </nav>
+            
             <!-- Đặt mua -->
-            <div class="flex items-center">
-                <a href="/" class="bg-white rounded-sm px-4 py-2 hover:bg-slate-100 mx-2 border border-slate-300">Huỷ</a>
-                <a href="/cart" class="bg-red-500 text-white px-4 py-2 rounded-sm mx-2 ">Đặt mua</a>
-                
+            <div class="flex items-center justify-end">
+              <a href="/" class="bg-white rounded-sm px-4 py-2 hover:bg-slate-100 mx-2 border border-slate-300">Huỷ</a>                
+              
+              <button type="submit"   class="bg-red-500 text-white px-4 py-2 rounded-sm mx-2 ">Đặt mua</button>
             </div>
+
         </div>
+    </form>
+    <div class="bg-white flex   rounded-sm p-4 mx-8 my-6 flex flex-col">
+        <h2 class="text-xl font-semibold pb-2">Thông tin sản phẩm</h2>
+        <p class="py-1 text-sm ">- {{information.model}}</p>
+        <p class="py-1 text-sm ">- {{information.color}}</p>
+        <p class="py-1 text-sm ">- {{information.type}}</p>
+        <p class="py-1 text-sm ">- {{information.origin}}</p>
+        <p class="py-1 text-sm ">- {{information.launch_time}}</p>
+        <p class="py-1 text-sm ">- {{information.warranty}}</p>
+        <p class="py-1 text-sm ">- {{information.cpu}}</p>
     </div>
-    <!-- decribe product -->
-    <div class="">
-        <h2 class="text-lg font-bold py-2 border-b border-slate-400">Mô tả sản phẩm</h2>
-        <p class="py-6">Giày thể thao Biti’s nam đã không còn là cái tên xa lạ với người tiêu dùng. Không chỉ là hình ảnh trẻ trung, năng động và gần gũi giới trẻ, giày thể thao Biti’s còn mang lại sự thoải mái và thời trang. Giày Thể Thao Thông Dụng Nam Biti’s BSM000700 được rất nhiều bạn trẻ lựa chọn bởi kiểu dáng đơn giản nhưng không kém phần tinh tế và sang trọng. Để biết thêm chi tiết về sản phẩm, hãy tham khảo bài viết dưới đây.</p>
-    </div>
+     <div class="px-8 mb-6">
+        <div class="rounded-sm w-full h-full  bg-white shadow p-8 pb-12 mt-10">
+        <h2 class="text-4xl text-gray-600 font-bold ">Bình luận</h2>
+        <form method="POST" enctype="multipart/form-data" action="/comment/{{product.id}}/" autocomplete="off"  class=" my-4">
+            {% csrf_token %}
+            <div class="flex ">
+              <a href="/profile/{{current_user.id}}/infor " class="flex ">
+                  <img src="{{ Profile.image.url|default:'/static/images/user-icon.png' }}" class="mr-2 w-10 h-10 rounded-full" alt="">
+                 <div class="pr-2">  
+                   <p class="  italic leading-1 text-[13.5px] whitespace-nowrap pt-0.5 ">
+                    {{ Profile.defaultName|default:user.username }}  
+                                    
+                  </p>
+                  #{{Profile.id}}
+                 </div>
+              </a>
+              {{comment_temp.comment_content}}
+            </div>
+            <!-- nút bình luận -->
+            <input type="submit" value=" bình luận" class="cursor-pointer px-4 py-1.5 rounded-md text-white bg-red-500 hover:bg-red-600 mt-4 float-right"/>
+        </form>
+        <!---------------------- Comment-------- -->
+        {% if Post_Comments %}
+          {% for comment in Post_Comments %}
+           {% if comment.product_id == product.id  %}
+               <div class=" my-2 Post_Comment">
+                    <div  class="flex ">
+                      <a href="#">
+                        {% if comment.user_id == Profile.id%}
+                        <img src="{{Profile.image.url}}" class="mr-2 w-8 h-8 shadow-lg border border-gray-200 rounded-full" alt="">
+                        {%else%}
+                        <img src="{{comment.image.url}}" class="mr-2 w-8 h-8 shadow-lg border border-gray-200 rounded-full" alt="">
+                        {%endif%}
+                    </a>
+                      <div class="flex items-baseline">
+                        {% if comment.user_id == Profile.id%}
+                        <p  class=" font-semibold italic text-gray-800  leading-1 comment_author  text-[16px] " >{{Profile.defaultName}}</p>
+                        {%else%}
+                        <p  class=" font-semibold italic text-gray-800  leading-1 comment_author  text-[16px] " >{{comment.username}}</p>
+                        {%endif%}
+                  
+                        <time class="italic  whitespace-norwrap  text-gray-800  text-[13.5px] flex items-end justify-end ml-2 ">{{post.created_at}}</time>
+                      </div>
+                    </div>
+                    <p class="text-base pl-11 leading-4  text-gray-800 text-wrap overflow-hidden">{{comment.comment_content}}</p>
+                    <div class="flex justify-between   pl-8">
+                      <div class="">
+                        <div  class="flex items-center">
+                              <form action="/favorite/{{comment.id}}/{{product.id}}/" method="post"   class="like  pl-3 pr-4 text-sm w-10 flex items-center">
+                                {% csrf_token %}
+                                <p class="pr-1 pt-1">{{ comment.like|default:"0" }}</p>
+                                  <button class="" name="Like"><i class="fa-solid  fa-thumbs-up cursor-pointer  text-xl text-gray-500 active:text-blue-600"></i></button>
+                              </form>
+                              <form action="/favorite/{{comment.id}}/{{product.id}}/" method="post"   class="like  pl-4 pr-4 text-sm w-10 flex items-center">
+                          {% csrf_token %}
+
+                                <p class="pr-1 pt-1">{{ comment.like|default:"0" }}</p>
+                                 <button class="" name="Dislike">
+                                   <i class="fa-solid  fa-thumbs-down cursor-pointer pt-1.5 text-xl text-gray-500 active:text-blue-600"></i>
+                                 </button>
+                              </form>
+                              <label for="CMT_child" class="ml-8 pt-1.5 hover:text-red-600 text-[14px]  reply-btn cursor-pointer"  onclick="handleShowReply(this)">phản hồi</label>
+                        </div>
+                          {% if comment.reply_count > 0 %}
+                          <button class="text-blue-500 text-[14.5px] my-1 mx-6 font-semibold total_reply" onclick="handleShowComment(this, '{{comment.id}}')">
+                            {{comment.reply_count}}  bình luận
+                          </button>
+                          {% endif %}
+                          
+                        
+                      </div>
+                        <time class="italic  text-[13.5px] flex items-end justify-end ">{{comment.created_at}}</time>
+                    </div>
+                    <!-- -----------------------repty form------------------ -->
+                    <div class="reply-form pt-0.5 hidden border-t border-gray-300 ">
+                     
+                        <button   class="outline-none hiddenBtn_cmt text-xl text-gray-600 font-bold flex justify-end ml-auto pr-4 " onclick="handleCloseReply(this)">X</button>
+                        <form method="POST" autocomplete="off" enctype="multipart/form-data"  action="{% url 'comment_child' product.id comment.id %}" class=" pb-8 pl-10 ">
+                          {% csrf_token %}
+                          <input type="hidden" class="px-3 italic  leading-1 comment_author  text-[15px] " name='comment_author' value="{{comment.author}}" />
+
+                          <div class="flex items-center">
+                            <div class="flex ">
+                              {% if comment.user_id == Profile.id %}
+                              <img src="{{ Profile.image.url|default:'/static/images/user-icon.png' }}" class="mr-2 w-6 h-6 shadow-lg border border-gray-200 rounded-full" alt="">
+                              {% else %}
+                              <img src="/static/images/user-icon.png" class="w-8 h-8 rounded-full" alt="">
+                            {% endif %}
+                              <div>
+                                <p class="px-2 whitespace-nowrap italic leading-1 text-[13.5px] whitespace-nowrap">
+                                  {% if current_user.id == Profile.id %}{{Profile.defaultName  }}{% else %}{{current_user.username}}{% endif %}</p>
+                                <p class="px-2 italic  leading-1  text-[13.5px] ">#321</p>
+                              </div>
+                            </div>
+                            {{commentChild_temp.comment_content}}
+                          </div>
+                          <input type="submit" value=" bình luận" class=" cursor-pointer px-3 text-sm py-1.5 rounded-md text-white bg-red-500 hover:bg-red-600 mt-1 float-right"/>
+                        </form>
+                    
+                    </div>
+            <!-- ---------------------comment Child--------------------- -->
+                <div class="comment_children hidden pl-11"> 
+                
+                </div>
+                </div>
+           {% endif %}
+
+          {% endfor %}
+          <!------------------------ commnet child----------------------- -->
+            <div class="hidden getComment_child">
+              {% for comment_child in Post_CommentChild %} 
+                    
+                      <div class="comment_{{comment_child.commentChild_id}}">
+                      <div  class="flex "> 
+                        <a href="#">
+                        {% if comment_child.user_id == Profile.id  %}
+                        <img src="{{ Profile.image.url}}" class="mr-2 w-6 h-6 shadow-lg border border-gray-200 rounded-full" alt="">
+                        {% else %}
+                        <img src="{{comment_child.image.url }}" class="mr-2 w-6 h-6 shadow-lg border border-gray-200 rounded-full" alt="">
+                        {% endif%}
+                        </a> 
+                        <div class="flex items-baseline"> 
+                          
+                          <p  class="px-3 italic  leading-1  comment_author  text-[12px] font-semibold " >
+                            {% if comment_child.user_id == Profile.id  %}
+                            {{Profile.defaultName}}
+                            {%else%}
+                            {{comment_child.username}}
+                            {%endif%}
+                          </p> 
+                            <time class="italic  whitespace-norwrap font-normal  text-[13.5px] flex items-end justify-end ">{{product.created_at}}</time> </div> </div>
+                          <p class="text-base pl-11 text-wrap overflow-hidden flex flex-wrap my-0 py-0">
+                            {% if comment_child.tag != ''%}@
+                            {{ comment_child.tag }}
+                            {% endif %}
+                              {{comment_child.comment_content}}</p>
+                            <div class="flex justify-between  py-2 pl-8"> 
+                              <div  class="flex items-center"> 
+                              <div   class="px-2 text-sm flex items-center"> 
+                                    <form action="/favorite_child/{{comment_child.user_id}}/{{product.id}}/" method="post"    class="like   pr-4 text-sm flex items-center w-full">
+                                        {% csrf_token %}
+                                      
+                                      <p class="pr-1 pt-1">1</p>
+                                        <button type="submit" name="Like"><i class="fa-solid  fa-thumbs-up cursor-pointer  text-xl text-gray-500 active:text-blue-600"></i></button>
+                                    </form>
+                                    <form action="/favorite_child/{{comment_child.user_id}}/{{product.id}}/" method="post"   class="like    text-sm flex items-center">
+                                        {% csrf_token %}
+                                      
+                                      <p class="pr-1 pt-1">1</p>
+                                        <button type="submit" name="Dislike">
+                                          <i class="fa-solid  fa-thumbs-down cursor-pointer pt-1.5 text-xl text-gray-500 active:text-blue-600"></i>
+                                        </button>
+                                </form>
+                                  </div> 
+                                  <label class="block cursor-pointer ml-4 pt-1.5 hover:text-red-600 text-[14px]  reply-btn" form="CMT_child" onclick="handleShowReply(this)">phản hồi</label> </div> <time class="italic  text-[13.5px] flex items-end justify-end ">{{comment_child.created_at}}</time> 
+                                </div>
+                                <!-- -----------------------repty form------------------ --> 
+                                <div class="reply-form pt-0.5 hidden border-t border-gray-300 "> 
+                                  <button   class="outline-none hiddenBtn_cmt text-xl text-gray-600 font-bold flex justify-end ml-auto pr-4 " onclick="handleCloseReply(this)">X</button> 
+                                  <form method="POST" autocomplete="off" enctype="multipart/form-data"  action="{% url 'comment_tag' product.id comment_child.commentChild_id comment_child.user_id comment_child.username %}" class=" pb-8 pl-10 "> 
+                                    {% csrf_token %} 
+                                    <input type="hidden" class="px-3 italic  leading-1 comment_author  text-[15px] " name='comment_author' value="{{comment_child.username}}" /> 
+                                    <div class="flex items-center"> 
+                                      <div class="flex "> 
+                                        <img src="{{ Profile.image.url|default:'/static/images/user-icon.png' }}" class="mr-2 w-6 h-6 shadow-lg border border-gray-200 rounded-full" alt="">
+                                        <div> <p class="px-2 whitespace-nowrap italic leading-1 text-[13.5px] ">
+                                          {% if current_user.id == Profile.id %}
+                                          {{Profile.defaultName  }}
+                                          {% else %}
+                                          {{current_user.username}}
+                                          {% endif %}</p> <p class="px-2 italic  leading-1  text-[13.5px] ">#321</p>
+                                        </div> </div> {{commentChild_temp.comment_content}} </div> 
+                                        <input type="submit" value=" bình luận" class=" cursor-pointer px-3 text-sm py-1.5 rounded-md text-white bg-red-500 hover:bg-red-600 mt-1 float-right"/> 
+                                  </form> 
+                                </div>
+
+                      </div>
+                      {%  endfor %} 
+            </div>
+      {% else %}
+         <h2 class="text-2xl flex items-center justify-center text-gray-500">Chưa có bình luận nào.</h2>
+      
+      {% endif %} 
+      
+        
+      </div>
+      </div>
 </div>
+<script >
+   
+  
+  var currentUser = "{{ current_user|escapejs }}";
+  var comment_inside =  document.querySelector('.comment_inside')
+  if ( window.history.replaceState ) {
+        window.history.replaceState( null, null, window.location.href );
+    }
+  
+    // handle Show Reply form
+    const handleShowReply = (e) => {
+      
+      if(currentUser){
+        const Post_Comment = e.parentNode.parentNode.parentNode.parentNode
+        const reply_form = Post_Comment.querySelector('.reply-form')
+        reply_form.style.display = "block"
+      }
+      else{
+        window.location.href = "/login"
+      }
+    }
+    const handleShowComment = (e,comment_id) => {
+      let commentid = parseInt((comment_id))
+      let reply_form = e.parentNode.parentNode.parentNode.querySelector('.comment_children');
+      let getComment_child = document.querySelector('.getComment_child')
+      let CommentCurrent = getComment_child.querySelectorAll(`.comment_${commentid}`)
+      let CommentInstance = []
+      CommentCurrent.forEach((element)=>{
+          CommentInstance.push(element.cloneNode(true))
+      })
+
+      CommentInstance.forEach((element)=>{
+        reply_form.appendChild(element)
+      })
+      var computedStyle = window.getComputedStyle(reply_form)
+      if (computedStyle.display === 'none' ) {
+        reply_form.style.display = "block"
+      } else {
+          reply_form.innerHTML = ''
+        reply_form.style.display = "none"
+
+      }
+    }
+    // HandleClose Reply form
+    const handleCloseReply =(e)=>{
+      const Post_Comment = e.parentNode.parentNode
+      
+      const reply_form = Post_Comment.querySelector('.reply-form')
+      reply_form.style.display = "none"
+    }
+</script>
 {%endblock%}

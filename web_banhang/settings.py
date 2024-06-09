@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 import os
 from pathlib import Path
-
+from django.contrib import messages
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -38,8 +38,16 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'myapp',
-    'django_jsonform'
+    'django_jsonform',
+    'django_router',
 ]
+MESSAGE_TAGS = {
+    messages.ERROR: 'danger',
+    messages.WARNING: 'warning',
+    messages.INFO: 'info',
+    messages.SUCCESS: 'success',
+    messages.DEBUG: 'secondary'
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -52,7 +60,10 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'web_banhang.urls'
-
+STRIPE_PUBLIC_KEY = 'pk_test_51POCiQ2KJYW4l77Ga67FrX6wPNCMY7PxSiFclg4j7yW7xgLFoQdVh6wnYxODoKCQlF1lNy5dDKz8NEGdNQV3YHUL00c4ymVVOV'
+STRIPE_PRIVATE_KEY = 'sk_test_51POCiQ2KJYW4l77GJSkT0ukwTIUzhSRHav293wXLgRPnRubKyDaZeMdltZcN8MT0EE04yQY7MltC0Bpz41D0Pv5M00vBcpOyd6'
+DJSTRIPE_WEBHOOK_SECRET = 'your_stripe_webhook_secret'
+DJSTRIPE_USE_NATIVE_JSONFIELD = True
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -64,13 +75,18 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'myapp.context_processors.currentUser_context',
+                'myapp.context_processors.Product_context',
+                'myapp.context_processors.NotificationContext',
             ],
         },
     },
 ]
 
 WSGI_APPLICATION = 'web_banhang.wsgi.application'
-
+#payment 
+PAYMENT_HOST = 'localhost:8000'
+PAYMENT_USES_SSL = False
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
@@ -107,7 +123,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Ho_Chi_Minh'
 
 USE_I18N = True
 
@@ -122,6 +138,7 @@ TEMPLATE_LOADERS = [
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = 'static/'
+PROFILES_URL = 'profiles/'
 MEDIA_URL = 'media/'
 STATICFILES_DIRS = [BASE_DIR / "media"]
 # Default primary key field type
@@ -129,3 +146,8 @@ STATICFILES_DIRS = [BASE_DIR / "media"]
 
 STATICFILES_DIRS = [BASE_DIR / "static"]
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+VNPAY_RETURN_URL = 'http://localhost:8000/payment_return'  # get from config
+VNPAY_PAYMENT_URL = 'https://sandbox.vnpayment.vn/paymentv2/vpcpay.html'  # get from config
+VNPAY_API_URL = 'https://sandbox.vnpayment.vn/merchant_webapi/api/transaction'
+VNPAY_TMN_CODE = '64YFN9YV'  # Website ID in VNPAY System, get from config
+VNPAY_HASH_SECRET_KEY = 'AHZBL7A8YZ8PDHGVRXKHGTQGCKLE32OK' 

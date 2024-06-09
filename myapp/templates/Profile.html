@@ -1,0 +1,109 @@
+{% extends "base.html" %} {% block title %}hồ sơ cá nhân {% endblock %}
+{% block content %}
+<div class="mt-36 ">
+    <div class="flex  h-full">
+        <div class="w-1/4 bg-white shadow mx-4 rounded-sm p-4 ">
+            <h2 class="py-2 text-2xl tracking-wide text-gray-600 flex justify-center font-bold">Hồ sơ</h2>
+     
+            <a href="/profile/{{current_user.id}}/infor" class="w-full block py-2 text-left hover:text-red-500">Thông tin cá nhân</a>
+            <a href="/profile/{{current_user.id}}/changepassword" class="w-full block py-2 text-left hover:text-red-500">Đổi mật khẩu</a>
+            <a href="/profile/{{current_user.id}}/notification" class="w-full block py-2 text-left hover:text-red-500">Cài đặt thông báo</a>
+            <a href="/profile/{{current_user.id}}/options" class="w-full block py-2 text-left hover:text-red-500">tùy chỉnh tài khoản</a>
+           
+        </div>
+        <form  method="POST"   class="form_profile h-full w-full shadow bg-white rounded-sm mx-4 py-4 pl-16 pr-4" enctype="multipart/form-data">
+            <h2 class="py-2 text-2xl text-gray-600 tracking-wide flex justify-center font-bold">Thông tin cá nhân</h2>
+            <div class="flex w-full">
+                <div class="w-full">
+                <div class="flex  items-center py-3 w-full"> 
+                    {% csrf_token %}
+                    <label for="profilename" class="whitespace-nowrap  w-[110px] ">Tên :</label>
+                    <div class="w-1/2">
+                        {{form.defaultName}}
+                        
+                    </div>
+                </div>
+                <div class="flex  items-center py-3 w-full"> 
+                    <label for="profilePhoneNumber" class="whitespace-nowrap  w-[110px] ">Số điện thoại :</label>
+                    <div class="w-1/2">
+                        {{form.phone_number}}
+                        
+                    </div>
+                </div>
+                <div class="flex  items-center py-3 w-full"> 
+                    <label for="profileEmail" class="whitespace-nowrap  w-[110px] ">Email :</label>
+                    <div class="w-1/2">
+                        {{form.email}}
+                        
+                    </div>
+                </div>
+                 <div class="flex  items-center py-3 w-full"> 
+                    <label for="profileEmail" class="whitespace-nowrap  w-[110px] ">Địa chỉ :</label>
+                    <div class="w-1/2">
+                        {{form.address}}
+                        
+                    </div>
+                </div>
+                <div class="flex  items-center py-3 "> 
+                    <label for="usergender" class="w-[110px]">Giới tính :</label>
+                    <select class="border border-gray-500 text-sm px-4 py-1.5" name="gender">
+                <option value="Nam">Nam</option>
+                <option value="Nữ">Nữ</option>
+                <option value="Khác">Khác</option>
+            </select>
+
+                </div>
+                <div class="flex birthday  items-center py-3"> 
+                    <label for="day" class="w-[110px]">Ngày sinh :</label>
+                    <div class="birthday-child">
+                        {{form.day}}
+                        {{form.month}}
+                        {{form.year}}
+                    </div>
+                </div>
+                <div class="flex  items-center py-3"> 
+                    <label for="name" class="w-[110px]" >Ảnh đại diện :</label>
+                    <div class="">
+                        <input type="file"  name="image" class="px-2 py-1.5  text-sm rounded-sm w-full" value="{{DefaultProfile.image}}"  placeholder="Nhập ..." accept="image/*" id="id_image">
+                    </div>
+                </div>
+            </div>
+            
+
+            </div>
+            
+            <button type="submit" class="bg-red-500 rounded-sm px-6 py-2 flex justify-end ml-auto text-white">Lưu </button>
+        </form>
+    </div>
+    
+    
+</div>
+<script>
+    //<p class=" text-[12px] text-red-500">yêu cầu nhập trường này</p>
+    var day = document.querySelector('.day')
+    var month = document.querySelector('.month')
+    var year = document.querySelector('.year')
+    var months = ["Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4", "Tháng 5", "Tháng 6", "Tháng 7", "Tháng 8", "Tháng 9", "Tháng 10", "Tháng 11", "Tháng 12"];
+    var currentYear = new Date().getFullYear();
+    for (var i = 1; i <= 31; i++) {
+        var option = document.createElement("option");
+        option.text = i;
+        option.value = i
+        day.add(option);
+    }
+
+    for (var i = 1; i <= months.length; i++) {
+        var option = document.createElement("option");
+        option.text = months[i];
+        option.value = i
+        month.add(option);
+    }
+    for (var i = currentYear; i >= currentYear - 100; i--) {
+        var option = document.createElement("option");
+        option.text = i;
+        option.value = i
+        year.add(option);
+    }
+
+</script>
+{%endblock%}

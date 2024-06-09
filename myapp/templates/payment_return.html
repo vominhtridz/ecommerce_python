@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="panel panel-default m-10 mt-36">
+        <div class="p-6 bg-white shadow-lg rounded-sm">
+
+            <div class="panel-heading">{{ title }}: {{ result }}</div>
+        <div class="panel-body mb-4">
+            <p>order_id:{{ order_id }}</p>
+            <p>amount:{{ amount }}</p>
+            <p>order_desc:{{ order_desc }}</p>
+            <p class="">vnp_TransactionNo:{{ vnp_TransactionNo }}</p>
+            {% if vnp_ResponseCode == '00' %}
+                <p>vnp_ResponseCode: {{ vnp_ResponseCode }} - Thành công</p>
+            {% else %}
+                <p>vnp_ResponseCode: {{ vnp_ResponseCode }} - Lỗi</p>
+            {% endif %}
+            {% if msg %}
+                <p class="alert-warning"> {{ msg }}</p>
+            {% endif %}
+        </div>
+        <a href="/" class="hover:underline text-white bg-green-500 rounded-sm shadow px-4 py-2  mt-4">Trang chủ</a>
+        </div>
+    </div>
+{% endblock %}
