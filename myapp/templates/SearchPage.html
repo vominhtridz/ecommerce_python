@@ -3,29 +3,21 @@
     <div class="p-10 pt-[8rem]">
         <div class="w-full h-full ">
             <h2 class="text-4xl flex justify-center flex items-center text-gray-600">- kết quả tìm kiếm :   
-                 <p class="px-2 text-5xl text-red-500 uppercase">{{ PostsResult.first.title }}
+                 <p class="px-2 text-3xl text-red-500 uppercase">{{ title }}
                  </p>
             
                 </h2>
            <div class="my-2 flex items-center flex-wrap">
               {% for post in PostsResult %}
-                <div class="w-1/4 h-[25rem] overflow-hidden px-2 py-2">
-                    <a href="{% url 'topic' post.id %}" class="w-full h-full">
+                <div class="w-1/4 h-[25rem]  px-2 py-2">
+                    <a href="/product_detail/{{post.id}}/" class="w-full h-full">
                     <div class="rounded-sm w-full h-full bg-white shadow">
-                        <img src="{{ post.image.url }}" class="w-full h-1/2" alt="">
+                        <img src="{{ post.image.url }}" class="w-full p-2 h-1/2" alt="">
                         <div class="px-4 py-1  h-full">
-                        <p class="text-base font-bold whitespace-nowrap text-gray-700 overflow-hidden">Chủ đề: {{ post.title }}</p>
-                        <p class="leading-5 text-sm h-[6.4rem] overflow-hidden text-ellipsis">- {{ post.content }}</p>
-                            <div class="flex justify-between">
-                                <form method="post" action="{% url 'delete_post' post.id %}" >
-                                    {% csrf_token %}
-                                    <input type="submit" value="xoá" class="text-red-500 cursor-pointer">
-                                </form>
-                                <a href='/update/{{post.id}}' class=" text-red-500 px-4">sửa</a>
-                            </div>
+                        <p class="text-lg font-bold text-center text-gray-700 overflow-hidden">{{ post.title }}</p>
                          <div class="flex items-center justify-between py-2 leading-4">
-                            <p class="italic  text-[13.5px] flex items-end justify-end ">Tác giả: {{post.author}}</p>
-                                <time class="italic  text-[13.5px] flex items-end justify-end ">{{post.created_at}}</time>
+                            <p class="italic  text-[13.5px] flex items-end justify-end ">màu: {{post.color}}</p>
+                                <time class="italic  text-[13.5px] flex items-end justify-end ">giá {{post.price}}</time>
                         </div>
                         </div>
 

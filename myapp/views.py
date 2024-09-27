@@ -54,9 +54,10 @@ def InforProduct(request, product_id):
 
 # ----------------------------------------HANDLE SEARCH PAGE  -------------------
 def SearchPage(request, search_value):
-    PostsResult = Product.objects.filter(title= search_value)
-    print('hello')
-    context = {'PostsResult': PostsResult,}
+    # Kiểm tra xem search_value có rỗng không
+    PostsResult = Product.objects.filter(title=search_value)
+    print('result', PostsResult)
+    context = {'PostsResult': PostsResult, 'title': search_value}
     return render(request, 'SearchPage.html', context)
 # --------------------------------------CART Page -------------------------
 @login_required

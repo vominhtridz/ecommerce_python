@@ -36,9 +36,9 @@
         </a>
          <div class="hidden searchItems">
         {% for post in products %}
-        <div class="items-search" >
+        <button value="{{post.id}}" class="items-search" >
             {{post.title}}
-          </div>
+          </button>
         {% endfor%}
       </div>
        <!-- search -->
@@ -239,6 +239,7 @@ return
 
 function handleSearch(value) {
   const items = document.querySelector('.searchItems');
+
   const searchValue = value.toLowerCase();
   const getTitleSearch = Array.from(items.querySelectorAll('.items-search')).map(item => item.textContent.trim());
 

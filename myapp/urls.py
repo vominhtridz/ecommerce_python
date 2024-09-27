@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path,re_path
 from django.conf import settings
 from django.conf.urls.static import static
 from . import views
@@ -21,7 +21,7 @@ urlpatterns = [
     path('logout/', views.user_logout, name='logout'),
     path('comment_child/<int:product_id>/<int:comment_id>/', views.Handle_CommentChild, name='comment_child'),
     path('comment_tag/<int:product_id>/<int:comment_id>/<int:user_id>/<str:comment_tag>/', views.Handle_CommentTag, name='comment_tag'),
-    path('search/<str:search_value>/', views.SearchPage, name='SearchPage'),
+    re_path(r'^search/(?P<search_value>.+)/$', views.SearchPage, name='SearchPage'),
     path('comment/<int:product_id>/', views.Handle_Comment, name='comment'),
     path('payment', views.payment, name='payment'),
     path('payment_ipn', views.payment_ipn, name='payment_ipn'),
