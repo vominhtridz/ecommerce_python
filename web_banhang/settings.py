@@ -31,13 +31,15 @@ CORS_ALLOWED_ORIGINS = [
     'https://ecommerce-django-7lfz.onrender.com',
     'http://127.0.0.1:8000',
     'http://127.0.0.1',
+    'ecommerce-django-7lfz.onrender.com'
 ]
 ALLOWED_HOSTS = [
     'https://ecommerce-django-7lfz.onrender.com',
     'http://localhost',
     'http://127.0.0.1:8000',
     'http://127.0.0.1',
-    '127.0.0.1'
+    '127.0.0.1',
+    'ecommerce-django-7lfz.onrender.com'
 
 ]
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
