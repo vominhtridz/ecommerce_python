@@ -29,13 +29,16 @@ SECRET_KEY = 'django-insecure--c+(#9!p!awa-&_q^(l1e^6-f+!gev%l*gcblb9330pj^w4v-4
 DEBUG = True
 CORS_ALLOWED_ORIGINS = [
     'https://ecommerce-django-7lfz.onrender.com',
-    'ecommerce-django-7lfz.onrender.com',
+    'http://127.0.0.1:8000',
+    'http://127.0.0.1',
 ]
 ALLOWED_HOSTS = [
     'https://ecommerce-django-7lfz.onrender.com',
-    'ecommerce-django-7lfz.onrender.com',
-    'localhost',
-    '127.0.0.1',
+    'http://localhost',
+    'http://127.0.0.1:8000',
+    'http://127.0.0.1',
+    '127.0.0.1'
+
 ]
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 CORS_ORIGIN_ALLOW_ALL = True

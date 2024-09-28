@@ -310,8 +310,12 @@ def login(request):
             user = authenticate(request, username=username, password=password)
             if user is not None:
                 auth_login(request, user)  
+                messages.success(request, 'Đăng nhập thành công')
+                
                 return redirect('home')
             else:
+                messages.error(request, 'Có lỗi xảy ra')
+                
                 form.add_error(None, 'Invalid username or password. Please try again.')
     else:
         form = LoginForm()
@@ -328,6 +332,7 @@ def register(request):
             else:
                 # Username is unique, save the form data
                 form.save()
+                messages.success(request, 'Đăng kí thành công')
                 return redirect('login')
     else:
         form = SignupForm()
