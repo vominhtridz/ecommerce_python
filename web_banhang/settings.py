@@ -14,7 +14,7 @@ from pathlib import Path
 from django.contrib import messages
 import dj_database_url
 from dotenv import load_dotenv
-load_dotenv();
+load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -27,17 +27,22 @@ SECRET_KEY = 'django-insecure--c+(#9!p!awa-&_q^(l1e^6-f+!gev%l*gcblb9330pj^w4v-4
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
+CORS_ALLOWED_ORIGINS = [
+    'https://ecommerce-django-7lfz.onrender.com',
+    'ecommerce-django-7lfz.onrender.com',
+]
 ALLOWED_HOSTS = [
+    'https://ecommerce-django-7lfz.onrender.com',
     'ecommerce-django-7lfz.onrender.com',
     'localhost',
     '127.0.0.1',
 ]
-
-
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+CORS_ORIGIN_ALLOW_ALL = True
 # Application definition
 
 INSTALLED_APPS = [
+    'corsheaders',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -57,6 +62,7 @@ MESSAGE_TAGS = {
 }
 
 MIDDLEWARE = [
+     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -152,7 +158,7 @@ STATICFILES_DIRS = [BASE_DIR / "media"]
 
 STATICFILES_DIRS = [BASE_DIR / "static"]
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-VNPAY_RETURN_URL = 'http://localhost:8000/payment_return'  # get from config
+VNPAY_RETURN_URL = 'https://ecommerce-django-7lfz.onrender.com/payment_return'  # get from config
 VNPAY_PAYMENT_URL = 'https://sandbox.vnpayment.vn/paymentv2/vpcpay.html'  # get from config
 VNPAY_API_URL = 'https://sandbox.vnpayment.vn/merchant_webapi/api/transaction'
 VNPAY_TMN_CODE = '64YFN9YV'  # Website ID in VNPAY System, get from config
